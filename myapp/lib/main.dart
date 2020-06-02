@@ -1,67 +1,64 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
+void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Column(children: [
-          Spacer(),
-          Center(
-            child: Opacity(opacity: 0.3, child: Text("Olá Programação IV"),)
+      title: 'Flutter - Table',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: WidgetTable(),
+    );
+  }
+}
+
+class WidgetTable extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Widget Table"),
+      ),
+      body: criaTabela(),
+    );
+  }
+  criaTabela() {
+    return Table(
+      defaultColumnWidth: FixedColumnWidth(150.0),
+      border: TableBorder(
+        horizontalInside: BorderSide(
+          color: Colors.black,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+        verticalInside: BorderSide(
+          color: Colors.black,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+      ),
+      children: [
+        _criarLinhaTable("Pontos, Time, Gols"),
+        _criarLinhaTable("25, Palmeiras,16 "),
+        _criarLinhaTable("20, Santos, 5"),
+        _criarLinhaTable("17, Flamento, 6"),
+      ],
+    );
+  }
+  _criarLinhaTable(String listaNomes) {
+    return TableRow(
+      children: listaNomes.split(',').map((name) {
+        return Container(
+          alignment: Alignment.center,
+          child: Text(
+            name,
+            style: TextStyle(fontSize: 20.0),
           ),
-          Spacer(),
-          Center(child: Theme(
-            data: ThemeData(accentColor: Colors.amber[300]),
-              child: Container(
-                color: Theme.of(context).accentColor,
-                child: Text(
-                  'Este teste tem uma cor de fundo',
-                  style: Theme.of(context).textTheme.title
-                ),
-              )
-            ),
-          ),
-          Spacer(),
-          Center(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xFF000000), Color(0XFFFF0000)],
-                  tileMode: TileMode.repeated
-                )
-              ),
-              child: Container(
-                width: 100, 
-                height: 100,
-                child: Text("Opaaa", style: TextStyle(color: Colors.white)),
-              ),
-            ),
-          ),
-          Spacer(),
-          Center(
-            child: Container(
-              color: Colors.yellow,
-              child: Transform(
-                alignment: Alignment.bottomLeft,
-                transform: Matrix4.skewY(0.4)..rotateZ(7),
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  color: Colors.red,
-                  child: (Text("Qualquer coisa!")),
-                ),
-              ),
-            ),
-          )
-        ],),
-      )
+          padding: EdgeInsets.all(8.0),
+        );
+      }).toList(),
     );
   }
 }
